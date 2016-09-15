@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ae66ac8a-e714-409b-be74-0d33c97cc915" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/example/Sensors/merge.java" />
+    <list default="true" id="ae66ac8a-e714-409b-be74-0d33c97cc915" name="Default" comment="Merge sort in java class">
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/example/SyncedSensors/sensorDataProcessing.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -54,7 +53,7 @@
       <file leaf-file-name="sensorDataProcessing.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/example/SyncedSensors/sensorDataProcessing.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
+            <state relative-caret-position="986">
               <caret line="97" column="0" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -747,7 +746,7 @@
       <workItem from="1472933313870" duration="1780000" />
       <workItem from="1472977344884" duration="9397000" />
       <workItem from="1473408241514" duration="27783000" />
-      <workItem from="1473935095323" duration="7060000" />
+      <workItem from="1473935095323" duration="7137000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1472758198862</created>
@@ -791,11 +790,18 @@
       <option name="project" value="LOCAL" />
       <updated>1473950965383</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Merge sort in java class">
+      <created>1473950998810</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1473950998810</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="50354000" />
+    <option name="totallyTimeSpent" value="50431000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -845,7 +851,8 @@
     <MESSAGE value="Add random binary generator" />
     <MESSAGE value="Wait and notify" />
     <MESSAGE value="Data fusion using synchronize, thread and runnable" />
-    <option name="LAST_COMMIT_MESSAGE" value="Data fusion using synchronize, thread and runnable" />
+    <MESSAGE value="Merge sort in java class" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge sort in java class" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -958,7 +965,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/example/SyncedSensors/sensorDataProcessing.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
+        <state relative-caret-position="986">
           <caret line="97" column="0" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />

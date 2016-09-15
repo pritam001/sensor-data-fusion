@@ -3,6 +3,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.text.ParseException;
 import java.util.Vector;
+import java.util.concurrent.ForkJoinPool;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -113,7 +114,7 @@ class Processor implements Runnable {
             while (sharedQueue1.isEmpty()) {
                 synchronized (processedQueue) {
                     System.out.println("Queue is empty. " + Thread.currentThread().getName()
-                            + " is waiting , sharedQueue1 size: " + sharedQueue1.size());
+                            + " is waiting , sharedQueue"+i+" size: " + sharedQueue1.size());
 
                     processedQueue.wait();
                 }
@@ -131,7 +132,7 @@ class Processor implements Runnable {
             while (sharedQueue2.isEmpty()) {
                 synchronized (processedQueue) {
                     System.out.println("Queue is empty. " + Thread.currentThread().getName()
-                            + " is waiting , sharedQueue1 size: " + sharedQueue2.size());
+                            + " is waiting , sharedQueue"+i+" size: " + sharedQueue2.size());
 
                     processedQueue.wait();
                 }
@@ -149,7 +150,7 @@ class Processor implements Runnable {
             while (sharedQueue3.isEmpty()) {
                 synchronized (processedQueue) {
                     System.out.println("Queue is empty. " + Thread.currentThread().getName()
-                            + " is waiting , sharedQueue1 size: " + sharedQueue3.size());
+                            + " is waiting , sharedQueue"+i+" size: " + sharedQueue3.size());
 
                     processedQueue.wait();
                 }
@@ -167,7 +168,7 @@ class Processor implements Runnable {
             while (sharedQueue4.isEmpty()) {
                 synchronized (processedQueue) {
                     System.out.println("Queue is empty. " + Thread.currentThread().getName()
-                            + " is waiting , sharedQueue1 size: " + sharedQueue4.size());
+                            + " is waiting , sharedQueue"+i+" size: " + sharedQueue4.size());
 
                     processedQueue.wait();
                 }
@@ -185,7 +186,7 @@ class Processor implements Runnable {
             while (sharedQueue5.isEmpty()) {
                 synchronized (processedQueue) {
                     System.out.println("Queue is empty. " + Thread.currentThread().getName()
-                            + " is waiting , sharedQueue1 size: " + sharedQueue5.size());
+                            + " is waiting , sharedQueue"+i+" size: " + sharedQueue5.size());
 
                     processedQueue.wait();
                 }
@@ -203,7 +204,7 @@ class Processor implements Runnable {
             while (sharedQueue6.isEmpty()) {
                 synchronized (processedQueue) {
                     System.out.println("Queue is empty. " + Thread.currentThread().getName()
-                            + " is waiting , sharedQueue1 size: " + sharedQueue6.size());
+                            + " is waiting , sharedQueue"+i+" size: " + sharedQueue6.size());
 
                     processedQueue.wait();
                 }
@@ -221,7 +222,7 @@ class Processor implements Runnable {
             while (sharedQueue7.isEmpty()) {
                 synchronized (processedQueue) {
                     System.out.println("Queue is empty. " + Thread.currentThread().getName()
-                            + " is waiting , sharedQueue1 size: " + sharedQueue7.size());
+                            + " is waiting , sharedQueue"+i+" size: " + sharedQueue7.size());
 
                     processedQueue.wait();
                 }
@@ -239,7 +240,7 @@ class Processor implements Runnable {
             while (sharedQueue8.isEmpty()) {
                 synchronized (processedQueue) {
                     System.out.println("Queue is empty. " + Thread.currentThread().getName()
-                            + " is waiting , sharedQueue1 size: " + sharedQueue8.size());
+                            + " is waiting , sharedQueue"+i+" size: " + sharedQueue8.size());
 
                     processedQueue.wait();
                 }
@@ -257,7 +258,7 @@ class Processor implements Runnable {
             while (sharedQueue9.isEmpty()) {
                 synchronized (processedQueue) {
                     System.out.println("Queue is empty. " + Thread.currentThread().getName()
-                            + " is waiting , sharedQueue1 size: " + sharedQueue9.size());
+                            + " is waiting , sharedQueue"+i+" size: " + sharedQueue9.size());
 
                     processedQueue.wait();
                 }
@@ -275,7 +276,7 @@ class Processor implements Runnable {
             while (sharedQueue10.isEmpty()) {
                 synchronized (processedQueue) {
                     System.out.println("Queue is empty. " + Thread.currentThread().getName()
-                            + " is waiting , sharedQueue1 size: " + sharedQueue10.size());
+                            + " is waiting , sharedQueue"+i+" size: " + sharedQueue10.size());
 
                     processedQueue.wait();
                 }
@@ -382,11 +383,22 @@ class Consumer implements Runnable {
         }
     }
 
+    private void sort_output(int[] processedQueue){
+        System.out.println("Pre-processing data:");
+        for(int i=0; i<10; i++){
+            System.out.println(processedQueue[i]);
+        }
+        System.out.println("Sorted data:");
+        ForkJoinPool pool = new ForkJoinPool();
+        pool.submit(new merge(processedQueue, 0, processedQueue.length)).join();
+        for(int i=0; i<10; i++){
+            System.out.println(processedQueue[i]);
+        }
+    }
+
+
     private void calculate() throws InterruptedException {
         int[] temp_array = new int[10];
-        int negative_count = 10;
-        //wait if array contains -1
-        while (negative_count > 0) {
             synchronized (processedQueue) {
                 int temp = 0;
                 for(int i=0;i<10;i++){
@@ -396,39 +408,41 @@ class Consumer implements Runnable {
                         temp_array[i] = processedQueue[i];
                     }
                 }
-                negative_count = temp;
+
+                if(temp == 0){
+                    sort_output(processedQueue);
+                    int sum = 0;
+                    long mult = 1;
+                    for(int i=0;i<10;i++){
+                        sum += processedQueue[i];
+                        mult *= (long)processedQueue[i];
+                        processedQueue[i] = -1;
+                    }
+
+                    if(sum > 10000){
+                        System.out.println("State detected from sum.");
+                    } else {
+                        System.out.println("State not detected from sum.");
+                    }
+
+                    if((sum/10) > 100){
+                        System.out.println("State detected from avg.");
+                    } else {
+                        System.out.println("State not detected from avg.");
+                    }
+
+                    if(mult > 100000){
+                        System.out.println("State detected from mult.");
+                    } else {
+                        System.out.println("State not detected from mult.");
+                    }
+                    processedQueue.notifyAll();
+                }
+                //System.out.println("Negative found : " + temp);
                 processedQueue.wait();
             }
-        }
 
-        //Otherwise consume element and notify waiting producer
-        synchronized (processedQueue) {
-            int sum = 0;
-            long mult = 1;
-            for(int i=0;i<10;i++){
-                sum += processedQueue[i];
-                mult *= (long)processedQueue[i];
-                processedQueue[i] = -1;
-            }
-
-            if(sum > 10000){
-                System.out.println("State detected from sum.");
-            } else {
-                System.out.println("State not detected from sum.");
-            }
-
-            if((sum/10) > 100){
-                System.out.println("State detected from avg.");
-            } else {
-                System.out.println("State not detected from avg.");
-            }
-
-            if(mult > 100000){
-                System.out.println("State detected from mult.");
-            } else {
-                System.out.println("State not detected from mult.");
-            }
-            processedQueue.notifyAll();
-        }
     }
 }
+
+
